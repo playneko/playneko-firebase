@@ -1,0 +1,55 @@
+button:focus {
+    outline: none;
+}
+
+.header {
+    width: 100%;
+    max-width: 100%;
+    color: #ffffff !important;
+    background: #1f1f1f !important;
+}
+
+.footer {
+    bottom: 0;
+    width: 100%;
+    max-width: 100%;
+    position: fixed;
+    color: #ffffff !important;
+    background: #1f1f1f !important;
+}
+
+.login-form {
+    width: calc(100vw);
+    width: -moz-calc(100vw);
+    width: -webkit-calc(100vw);
+    height: calc(100vh);
+    height: -moz-calc(100vh);
+    height: -webkit-calc(100vh);
+    max-width: 100%;
+    max-height: 100%;
+    background-color: #44beed;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-image: url('http://localhost:3000/login.png');
+}
+
+.login-form_group {
+    margin: 0 auto !important;
+    padding: calc(100vw - 84vw) !important;
+    padding-top: calc(100vh - 40vh) !important;
+}
+
+.login-form_show {
+    display: block;
+    padding-top: 10px;
+    text-align: center;
+}
+
+.login-form_hidden {
+    display: none;
+}
+
+.login-form > div.alert {
+    margin-right: 25px;
+    margin-left: 25px;
+}
