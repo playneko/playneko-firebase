@@ -32,7 +32,7 @@ function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
-const Login = (props) => {
+const Registry = (props) => {
   let history = useHistory();
   const classes = useStyles();
   const [error, setError] = React.useState(false);
@@ -40,37 +40,12 @@ const Login = (props) => {
 
   const handleOnSubmit = (event) => {
     event.preventDefault();
-
-    setLoading(true);
-    firebase.auth().signInWithEmailAndPassword(event.target.email.value, event.target.password.value)
-    .then(res => {
-      props.params({
-        auth: true,
-        uid: res.user.uid,
-        email: res.user.email
-      });
-      history.push("/");
-    })
-    .catch(error => {
-      props.params({
-        auth: false,
-        uid: "",
-        email: ""
-      });
-      setError(true);
-      setLoading(false);
-    });
   }
-
-  // 회원가입 페이지로 이동
-  const handleOnRegistry = () => {
-    history.push("/user/registry");
-  };
 
   return (
     <>
-      <div className="login-form">
-        <form onSubmit={handleOnSubmit} className="login-form_group">
+      <div className="registry-form">
+        <form onSubmit={handleOnSubmit} className="registry-form_group">
           {error ? <Alert severity="error">이메일 또는 비밀번호를 확인해 주시기바랍니다.</Alert> : ""}
           <TextField
             label="이메일"
@@ -87,15 +62,12 @@ const Login = (props) => {
             className={classes.textField}
             helperText="비밀번호를 입력해 주세요."
           />
-          <div className={loading === null || loading === false ? "login-form_show" : "login-form_hidden"}>
+          <div className={loading === null || loading === false ? "registry-form_show" : "registry-form_hidden"}>
             <Button variant="contained" color="primary" type="submit">
-              로그인
-            </Button>{' '}
-            <Button variant="contained" color="warning" type="button" onClick={handleOnRegistry}>
-              회원가입
+              등록하기
             </Button>
           </div>
-          <div className={loading != null && loading === true ? "login-form_show" : "login-form_hidden"}>
+          <div className={loading != null && loading === true ? "registry-form_show" : "registry-form_hidden"}>
             <CircularProgress disableShrink />
           </div>
         </form>
@@ -104,4 +76,4 @@ const Login = (props) => {
   );
 }
 
-export default Login;
+export default Registry;

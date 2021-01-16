@@ -9,6 +9,8 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Header from "./component/Header";
 // 로그인
 import Login from "./component/Login";
+// 회원가입
+import Registry from "./component/Registry";
 // 친구목록
 import People from "./component/People";
 // 친구추가
@@ -49,7 +51,7 @@ function App() {
           <CssBaseline />
           <Header />
           <Switch>
-            <Route path="/" render={() => <People>{authInfo}</People>} />
+            <Route exact path="/" render={() => <People>{authInfo}</People>} />
             <Route path="/people/add" render={() => <PeopleAdd />} />
           </Switch>
           <Footer />
@@ -61,7 +63,8 @@ function App() {
       <Router>
         <ThemeProvider theme={myTheme}>
           <Switch>
-            <Route path="/" render={() => <Login params={handleAuth} />} />
+            <Route exact path="/" render={() => <Login params={handleAuth} />} />
+            <Route path="/user/registry" render={() => <Registry />} />
           </Switch>
         </ThemeProvider>
       </Router>
