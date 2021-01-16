@@ -5,8 +5,6 @@ import { createMuiTheme } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
 // 컴포넌트
-// Firebase
-// import firebase from './component/Firebase'
 // Header
 import Header from "./component/Header";
 // 로그인
@@ -20,23 +18,10 @@ import Footer from "./component/Footer";
 // CSS
 import './styles/App.css';
 
-// const getFireDB = () => {
-//   // Firebase 로그인 체크
-//   firebase.auth().onAuthStateChanged(user => {
-//     if (user) {
-//       // 로그인
-//       console.log(true);
-//     } else {
-//       // 로그아웃
-//       console.log(false);
-//     }
-//   })
-// }
-
 const colorTheme = createMuiTheme({
   palette: {
     primary: {
-      main: '#212121',
+      main: '#333333',
     },
     secondary: {
       main: '#ff3d00',

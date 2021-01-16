@@ -1,5 +1,14 @@
 import React, { useEffect } from 'react';
 import { useHistory } from "react-router-dom";
+import { makeStyles } from '@material-ui/core/styles';
+import List from '@material-ui/core/List';
+import Avatar from '@material-ui/core/Avatar';
+import ListItem from '@material-ui/core/ListItem';
+import IconButton from '@material-ui/core/IconButton';
+import ListItemText from '@material-ui/core/ListItemText';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import ArrowForwardIos from '@material-ui/icons/ArrowForwardIos';
+import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import firebase from "firebase";
 
 const Friends = (uid, setfriends) => {
@@ -20,6 +29,12 @@ const Friends = (uid, setfriends) => {
   }, [uid]);
 }
 
+const useStyles = makeStyles((theme) => ({
+  root: {
+    width: '100%',
+  },
+}));
+
 const ListRender = (friends) => {
   const lists = friends.children.data;
   console.log(lists);
@@ -27,7 +42,20 @@ const ListRender = (friends) => {
     <>
     {
       Object.keys(lists).map((item, idx) => (
-        <div>{console.log(idx)},{console.log(lists[item].name)}</div>
+        <ListItem key={idx} button>
+          <ListItemAvatar>
+            <Avatar
+              alt={lists[item].name}
+              src={lists[item].image}
+            />
+          </ListItemAvatar>
+          <ListItemText id={idx} primary={lists[item].name} />
+          <ListItemSecondaryAction>
+            <IconButton edge="end" aria-label="comments">
+              <ArrowForwardIos />
+            </IconButton>
+          </ListItemSecondaryAction>
+        </ListItem>
       ))
     }
     </>
@@ -36,9 +64,8 @@ const ListRender = (friends) => {
 
 const People = (props) => {
   let history = useHistory();
+  const classes = useStyles();
   const [friends, setfriends] = React.useState(null);
-  // const [error, setError] = React.useState(null);
-  // const [loading, setLoading] = React.useState(false);
 
   Friends(props.children.uid, setfriends);
   console.log(props.children.uid);
@@ -46,7 +73,9 @@ const People = (props) => {
 
   return (
     <>
-    {friends != null ? <ListRender>{friends}</ListRender> : ""}
+      <List dense className={classes.root}>
+      {friends != null ? <ListRender>{friends}</ListRender> : ""}
+      </List>
     </>
   );
 }
