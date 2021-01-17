@@ -40,13 +40,38 @@ const Registry = (props) => {
 
   const handleOnSubmit = (event) => {
     event.preventDefault();
+
+    setLoading(true);
+    firebase.auth().createUserWithEmailAndPassword(event.target.email.value, event.target.password.value)
+    .then(res => {
+      const user = firebase.auth().currentUser;
+      
+      if (user != null) {
+        firebase.database().ref('users/' + user.uid).set({
+          username: event.target.name.value,
+          email: event.target.email.value,
+          name: event.target.name.value,
+          age: event.target.age.value,
+          image : "https://firebasestorage.googleapis.com/v0/b/cocoatalk-41442.appspot.com/o/avata%2FkCvqARth.png?alt=media&token=23aedec4-4aa9-410a-84d1-7e7cb507c345"
+        });
+        setLoading(false);
+        history.push("/");
+      } else {
+        setError(true);
+        setLoading(false);
+      }
+    })
+    .catch(error => {
+      setError(true);
+      setLoading(false);
+    });
   }
 
   return (
     <>
       <div className="registry-form">
         <form onSubmit={handleOnSubmit} className="registry-form_group">
-          {error ? <Alert severity="error">이메일 또는 비밀번호를 확인해 주시기바랍니다.</Alert> : ""}
+          {error ? <Alert severity="error">회원정보 등록중 에러가 발생했습니다.</Alert> : ""}
           <TextField
             label="이메일"
             id="margin-normal"
@@ -61,6 +86,20 @@ const Registry = (props) => {
             name="password"
             className={classes.textField}
             helperText="비밀번호를 입력해 주세요."
+          />
+          <TextField
+            label="이름"
+            id="margin-normal"
+            name="name"
+            className={classes.textField}
+            helperText="이름을 입력해 주세요."
+          />
+          <TextField
+            label="나이"
+            id="margin-normal"
+            name="age"
+            className={classes.textField}
+            helperText="나이를 입력해 주세요."
           />
           <div className={loading === null || loading === false ? "registry-form_show" : "registry-form_hidden"}>
             <Button variant="contained" color="primary" type="submit">

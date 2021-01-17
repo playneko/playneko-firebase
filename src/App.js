@@ -5,8 +5,6 @@ import { createMuiTheme } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
 // 컴포넌트
-// Header
-import Header from "./component/Header";
 // 로그인
 import Login from "./component/Login";
 // 회원가입
@@ -15,8 +13,6 @@ import Registry from "./component/Registry";
 import People from "./component/People";
 // 친구추가
 import PeopleAdd from "./component/PeopleAdd";
-// Footer
-import Footer from "./component/Footer";
 // CSS
 import './styles/App.css';
 
@@ -35,7 +31,8 @@ function App() {
   const [authInfo, setAuthInfo] = React.useState({
     auth: false,
     uid: "",
-    email: ""
+    email: "",
+    header: ""
   });
   const [myTheme, setMyTheme] = React.useState(colorTheme);
 
@@ -44,32 +41,22 @@ function App() {
     setAuthInfo(e);
   };
 
-  if (authInfo.auth) {
-    return (
-      <Router>
-        <ThemeProvider theme={myTheme}>
-          <CssBaseline />
-          <Header />
-          <Switch>
-            <Route exact path="/" render={() => <People>{authInfo}</People>} />
-            <Route path="/people/add" render={() => <PeopleAdd />} />
-          </Switch>
-          <Footer />
-        </ThemeProvider>
-      </Router>
-    );
-  } else {
-    return (
-      <Router>
-        <ThemeProvider theme={myTheme}>
-          <Switch>
-            <Route exact path="/" render={() => <Login params={handleAuth} />} />
-            <Route path="/user/registry" render={() => <Registry />} />
-          </Switch>
-        </ThemeProvider>
-      </Router>
-    );
-  }
+  return (
+    <Router>
+      <ThemeProvider theme={myTheme}>
+        { authInfo.auth ? <CssBaseline /> : "" }
+        <Switch>
+          {
+            authInfo.auth ?
+              <Route exact path="/" render={() => <People>{authInfo}</People>} /> :
+              <Route exact path="/" render={() => <Login params={handleAuth} />} />
+          }
+          <Route path="/user/registry" render={() => <Registry />} />
+          <Route path="/people/add" render={() => <PeopleAdd>{authInfo}</PeopleAdd>} />
+        </Switch>
+      </ThemeProvider>
+    </Router>
+  );
 }
 
 export default App;

@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { useHistory } from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import Avatar from '@material-ui/core/Avatar';
@@ -11,17 +10,23 @@ import ArrowForwardIos from '@material-ui/icons/ArrowForwardIos';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import firebase from "firebase";
 
+// 컴포넌트
+// 로그인 체크
+import CheckLogin from "./CheckLogin";
+// Header
+import Header from "./PeopleHeader";
+// Footer
+import Footer from "./Footer";
+
 const Friends = (uid, setfriends) => {
   let db = firebase.database();
   let ref = db.ref("/friends/" + uid);
-  console.log(ref);
 
   useEffect(() => {
     ref
       .orderByKey()
       .limitToFirst(10)
       .on("value", snapshot => {
-        console.log(snapshot);
         setfriends({
           data: snapshot.val()
         });
@@ -37,45 +42,54 @@ const useStyles = makeStyles((theme) => ({
 
 const ListRender = (friends) => {
   const lists = friends.children.data;
-  console.log(lists);
-  return (
-    <>
-    {
-      Object.keys(lists).map((item, idx) => (
-        <ListItem key={idx} button>
-          <ListItemAvatar>
-            <Avatar
-              alt={lists[item].name}
-              src={lists[item].image}
-            />
-          </ListItemAvatar>
-          <ListItemText id={idx} primary={lists[item].name} />
-          <ListItemSecondaryAction>
-            <IconButton edge="end" aria-label="comments">
-              <ArrowForwardIos />
-            </IconButton>
-          </ListItemSecondaryAction>
-        </ListItem>
-      ))
-    }
-    </>
-  );
+
+  if (lists != null) {
+    return (
+      <>
+      {
+        Object.keys(lists).map((item, idx) => (
+          <ListItem key={idx} button>
+            <ListItemAvatar>
+              <Avatar
+                alt={lists[item].name}
+                src={lists[item].image}
+              />
+            </ListItemAvatar>
+            <ListItemText id={idx} primary={lists[item].name} />
+            <ListItemSecondaryAction>
+              <IconButton edge="end" aria-label="comments">
+                <ArrowForwardIos />
+              </IconButton>
+            </ListItemSecondaryAction>
+          </ListItem>
+        ))
+      }
+      </>
+    );
+  } else {
+    return (
+      <></>
+    );
+  }
 }
 
 const People = (props) => {
-  let history = useHistory();
   const classes = useStyles();
   const [friends, setfriends] = React.useState(null);
 
+  // 로그인 체크
+  CheckLogin(props);
+
+  // 친구목록 취득
   Friends(props.children.uid, setfriends);
-  console.log(props.children.uid);
-  console.log(friends);
 
   return (
     <>
+      <Header />
       <List dense className={classes.root}>
       {friends != null ? <ListRender>{friends}</ListRender> : ""}
       </List>
+      <Footer />
     </>
   );
 }

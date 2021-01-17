@@ -9,6 +9,16 @@ button:focus {
     background: #1f1f1f !important;
 }
 
+.header-people_add {
+    flex: 1 1 auto;
+    text-align: right;
+}
+
+.header-people_back {
+    flex: 1 1 auto;
+    text-align: left;
+}
+
 .footer {
     bottom: 0;
     width: 100%;
@@ -69,4 +79,14 @@ button:focus {
 .login-form > div.alert, .registry-form > div.alert {
     margin-right: 25px;
     margin-left: 25px;
+}
+
+.people-add_div {
+    display: flex;
+    margin-top: 15px;
+}
+
+.people-add_div > div {
+    width: calc(80vw);
+    margin: 0 auto !important;
 }
