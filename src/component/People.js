@@ -18,18 +18,27 @@ import Header from "./PeopleHeader";
 // Footer
 import Footer from "./Footer";
 
-const Friends = (uid, setfriends) => {
+const Friends = (uid, friends, setFriends) => {
   let db = firebase.database();
   let ref = db.ref("/friends/" + uid);
 
   useEffect(() => {
     ref
       .orderByKey()
-      .limitToFirst(10)
       .on("value", snapshot => {
-        setfriends({
-          data: snapshot.val()
-        });
+        if (!JSON.parse(JSON.stringify(snapshot)).uuid) {
+          setFriends({
+            data: snapshot.val()
+          });
+        } else {
+          setFriends({
+            data: [{
+              name: JSON.parse(JSON.stringify(snapshot)).name,
+              image: JSON.parse(JSON.stringify(snapshot)).image,
+              uuid: JSON.parse(JSON.stringify(snapshot)).uuid
+            }]
+          });
+        }
       });
   }, [uid]);
 }
@@ -40,32 +49,48 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const ItemRender = (param) => {
+  const data = param.item.length > 0 ? param.item[0] : param.item;
+
+  return (
+    <ListItem key={param.idx} button>
+      <ListItemAvatar>
+        <Avatar
+          alt={data.name}
+          src={data.image}
+        />
+      </ListItemAvatar>
+      <ListItemText id={param.idx} primary={data.name} />
+      <ListItemSecondaryAction>
+        <IconButton edge="end" aria-label="comments">
+          <ArrowForwardIos />
+        </IconButton>
+      </ListItemSecondaryAction>
+    </ListItem>
+  );
+}
+
 const ListRender = (friends) => {
   const lists = friends.children.data;
 
   if (lists != null) {
-    return (
-      <>
-      {
-        Object.keys(lists).map((item, idx) => (
-          <ListItem key={idx} button>
-            <ListItemAvatar>
-              <Avatar
-                alt={lists[item].name}
-                src={lists[item].image}
-              />
-            </ListItemAvatar>
-            <ListItemText id={idx} primary={lists[item].name} />
-            <ListItemSecondaryAction>
-              <IconButton edge="end" aria-label="comments">
-                <ArrowForwardIos />
-              </IconButton>
-            </ListItemSecondaryAction>
-          </ListItem>
-        ))
-      }
-      </>
-    );
+    if (lists.length < 2) {
+      return (
+        <>
+        {<ItemRender idx="0" item={lists} />}
+        </>
+      );
+    } else {
+      return (
+        <>
+        {
+          Object.keys(lists).map((item, idx) => (
+            <ItemRender idx={idx} item={lists[item]} />
+          ))
+        }
+        </>
+      );
+    }
   } else {
     return (
       <></>
@@ -75,13 +100,13 @@ const ListRender = (friends) => {
 
 const People = (props) => {
   const classes = useStyles();
-  const [friends, setfriends] = React.useState(null);
+  const [friends, setFriends] = React.useState(null);
 
   // 로그인 체크
   CheckLogin(props);
 
   // 친구목록 취득
-  Friends(props.children.uid, setfriends);
+  Friends(props.children.uid, friends, setFriends);
 
   return (
     <>
