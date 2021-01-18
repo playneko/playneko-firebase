@@ -34,7 +34,7 @@ const Footer = () => {
         textColor="primary"
       >
         <Tab icon={<PersonIcon />} aria-label="친구목록" component={Link} to="/" style={{ color: grey[100] }} />
-        <Tab icon={<ChatBubbleIcon />} aria-label="채팅" component={Link} to="/" style={{ color: grey[100] }} />
+        <Tab icon={<ChatBubbleIcon />} aria-label="채팅" component={Link} to="/chat/list" style={{ color: grey[100] }} />
         <Tab icon={<MoreHorizIcon />} aria-label="기타" component={Link} to="/" style={{ color: grey[100] }} />
       </Tabs>
     </Paper>

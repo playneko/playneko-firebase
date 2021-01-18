@@ -4,7 +4,9 @@ button:focus {
 
 .header {
     width: 100%;
+    z-index: 9999;
     max-width: 100%;
+    position: fixed;
     color: #ffffff !important;
     background: #1f1f1f !important;
 }
@@ -22,10 +24,34 @@ button:focus {
 .footer {
     bottom: 0;
     width: 100%;
+    z-index: 9999;
     max-width: 100%;
     position: fixed;
     color: #ffffff !important;
     background: #1f1f1f !important;
+}
+
+.footer-chat_room {
+    height: 45px;
+    background-color: unset !important;
+}
+
+.footer-chat_room > form > div {
+    padding-top: 0px;
+    margin-left: 0 !important;
+    background-color: unset !important;
+}
+
+.footer-chat_room > form > div > div {
+    margin: unset !important;
+}
+
+.footer-chat_fieldset {
+    border: 0px;
+}
+
+.footer-chat_fieldset > fieldset {
+    border: 0px;
 }
 
 .login-form {
@@ -81,9 +107,17 @@ button:focus {
     margin-left: 25px;
 }
 
+.list-top {
+    padding-top: 60px !important;
+}
+
+.list-bottom {
+    padding-bottom: 50px !important;
+}
+
 .people-add_div {
     display: flex;
-    margin-top: 15px;
+    /* margin-top: 15px; */
 }
 
 .people-add_div > form {
@@ -93,4 +127,68 @@ button:focus {
 .people-add_div > form > div {
     width: calc(80vw);
     margin: 0 auto !important;
+}
+
+.chat-list_data {
+    font-size: 10px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    text-overflow: ellipsis;
+    -webkit-box-orient: vertical;
+    width: calc(100vw - 40vw);
+}
+
+.chat-list_date {
+    font-size: 13px;
+}
+
+.chat-room_bubble_avatar {
+    margin-bottom: auto;
+    min-width: 35px !important;
+}
+
+.chat-room_bubble_avatar > div {
+    width: 30px !important;
+    height: 30px !important;
+}
+
+.chat-room_bubble_left {
+    padding: 5px;
+    width: auto;
+    font-size: 10px;
+    color: #ffffff;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 7px;
+    white-space: pre-line;
+    background: #868686;
+    border: 1px solid #868686;
+}
+
+.chat-room_bubble_right {
+    padding: 5px;
+    width: auto;
+    font-size: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 7px;
+    white-space: pre-line;
+    background: #ffde3f;
+    border: 1px solid #ffde3f;
+}
+
+.chat-room_bubble_time_left {
+    font-size: 9px;
+    margin-top: auto;
+    margin-bottom: 0;
+    padding-left: 5px;
+}
+
+.chat-room_bubble_time_right {
+    font-size: 9px;
+    margin-top: auto;
+    margin-left: auto;
+    margin-bottom: 0;
+    padding-right: 5px;
 }

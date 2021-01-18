@@ -31,17 +31,12 @@ const ListRender = (paramData) => {
   const search = paramData.children.search;
   const lists = paramData.children.friends.data;
 
-  const handleOnPeopleAdd = (event, auth, item, data) => {
-    console.log(event);
-    console.log(auth);
-    console.log(item);
-    console.log(data);
-
+  const handleOnPeopleAdd = (auth, uuid, data) => {
     let db = firebase.database();
-    let ref = db.ref("/friends/" + auth.uid);
+    let ref = db.ref("/friends/" + auth.uid + "/" + uuid);
 
     ref.set({
-      uuid: item,
+      uuid: uuid,
       name: data.name,
       image : data.image
     });
@@ -63,7 +58,7 @@ const ListRender = (paramData) => {
               <ListItemText id={idx} primary={lists[item].name} />
               <ListItemSecondaryAction>
                 <IconButton edge="end" aria-label="comments">
-                  <PersonAdd onClick={(event) => handleOnPeopleAdd(event, auth, item, lists[item])} />
+                  <PersonAdd onClick={() => handleOnPeopleAdd(auth, item, lists[item])} />
                 </IconButton>
               </ListItemSecondaryAction>
             </ListItem>
@@ -112,7 +107,7 @@ const PeopleAdd = (props) => {
   return (
     <>
       <Header>add</Header>
-      <div className="people-add_div">
+      <div className="people-add_div list-top">
         <form onSubmit={handleOnSubmit}>
         <TextField
           className={classes.margin}

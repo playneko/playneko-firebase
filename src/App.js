@@ -13,6 +13,10 @@ import Registry from "./component/Registry";
 import People from "./component/People";
 // 친구추가
 import PeopleAdd from "./component/PeopleAdd";
+// 채팅목록
+import ChatList from "./component/ChatList";
+// 채팅방
+import ChatRoom from "./component/ChatRoom";
 // CSS
 import './styles/App.css';
 
@@ -53,6 +57,8 @@ function App() {
           }
           <Route path="/user/registry" render={() => <Registry />} />
           <Route path="/people/add" render={() => <PeopleAdd>{authInfo}</PeopleAdd>} />
+          <Route path="/chat/list" render={() => <ChatList>{authInfo}</ChatList>} />
+          <Route path="/chat/room/:chatid" render={() => <ChatRoom>{authInfo}</ChatRoom>} />
         </Switch>
       </ThemeProvider>
     </Router>
