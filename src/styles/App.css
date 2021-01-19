@@ -32,8 +32,12 @@ button:focus {
 }
 
 .footer-chat_room {
+    bottom: 0;
+    width: 100%;
     height: 45px;
-    background-color: unset !important;
+    z-index: 9999;
+    max-width: 100%;
+    position: fixed;
 }
 
 .footer-chat_room > form > div {
@@ -43,7 +47,9 @@ button:focus {
 }
 
 .footer-chat_room > form > div > div {
+    color: #ffffff;
     margin: unset !important;
+    padding: 8px 7px 9px !important;
 }
 
 .footer-chat_fieldset {
@@ -52,6 +58,51 @@ button:focus {
 
 .footer-chat_fieldset > fieldset {
     border: 0px;
+}
+
+.footer-chat_input_open {
+    height: unset !important;
+}
+
+.footer-chat_room_emoji {
+    height: 180px;
+    margin: 0 auto;
+}
+
+.footer-chat_emoji_open {
+    display: block;
+    overflow: auto;
+    margin-top: 3px;
+    background: #545454;
+}
+
+.footer-chat_emoji_close {
+    display: none;
+}
+
+.footer-chat_room_emoji > div {
+    float: left;
+}
+
+.footer-chat_room_emoji > div > img {
+    width: 80px;
+}
+
+.footer_chat_room_emoji_pv_open {
+    opacity: 0.7;
+    height: 100px;
+    display: block;
+    text-align: center;
+    background: #545454;
+}
+
+.footer_chat_room_emoji_pv_open > img {
+    width: 100px;
+    opacity: unset;
+}
+
+.footer_chat_room_emoji_pv_close {
+    display: none;
 }
 
 .login-form {

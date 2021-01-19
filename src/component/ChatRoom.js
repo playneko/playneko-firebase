@@ -90,13 +90,15 @@ const ChatRoom = (props) => {
   // 채팅목록 취득
   ChatRooms(message, chatid, setChatRooms);
 
+  console.log(message);
+
   return (
     <>
       <Header>room</Header>
       <List dense className={classes.root + " list-top list-bottom"}>
       {chatid != null && chatrooms != null ? <ListRender>{paramData}</ListRender> : ""}
       </List>
-      <Footer />
+      <Footer chatid={chatid} params={setMessage} />
     </>
   );
 }
