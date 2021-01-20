@@ -47,6 +47,7 @@ const Login = (props) => {
       props.params({
         auth: true,
         uid: res.user.uid,
+        image: "",
         email: res.user.email
       });
       history.push("/");
@@ -55,6 +56,7 @@ const Login = (props) => {
       props.params({
         auth: false,
         uid: "",
+        image: "",
         email: ""
       });
       setError(true);

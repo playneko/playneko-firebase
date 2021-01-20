@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Divider from '@material-ui/core/Divider';
@@ -44,12 +45,39 @@ const ChildByAutoId = (chatid) => {
   return childByAutoId.key;
 }
 
-const SendMessage = (sendMessage) => {
+const SendProcessMessage = (childByAutoId, chatid, paramData) => {
   let db = firebase.database();
-  const childByAutoId = ChildByAutoId(sendMessage.chatid);
+  let ref = db.ref("/message/" + chatid + "/" + childByAutoId);
+  ref.set(paramData);
+}
 
-  console.log(sendMessage);
-  console.log(childByAutoId);
+const SendMessage = (sendMessage) => {
+  const nowTime = moment().format('YYYY-MM-DD HH:mm:ss');
+  const chatid = sendMessage.chatid;
+  const auth = sendMessage.auth;
+  const emoji = sendMessage.emoji;
+  const message = sendMessage.message;
+
+  if (chatid != null && emoji != null && emoji.length > 0) {
+    const paramData = {
+      uuid: auth.uid,
+      image: auth.image,
+      emoji: emoji,
+      datetime : nowTime
+    };
+    const childByAutoId = ChildByAutoId(chatid);
+    SendProcessMessage(childByAutoId, chatid, paramData);
+  }
+  if (chatid != null && message != null && message.length > 0) {
+    const paramData = {
+      uuid: auth.uid,
+      image: auth.image,
+      message: message,
+      datetime : nowTime
+    };
+    const childByAutoId = ChildByAutoId(chatid);
+    SendProcessMessage(childByAutoId, chatid, paramData);
+  }
 }
 
 const Footer = (props) => {
@@ -76,16 +104,21 @@ const Footer = (props) => {
 
   const handleOnSubmit = (event) => {
     event.preventDefault();
-    const message = event.target.chat_message.value;
+    const targetMessage = event.target.chat_message.value;
     const sendMessage = {
       emoji: selEmoji,
-      message: message,
-      chatid: props.chatid
+      message: targetMessage,
+      auth: props.paramData.auth,
+      chatid: props.paramData.chatid
     };
 
-    console.log(sendMessage);
-    props.params(sendMessage);
+    props.paramMsg(sendMessage);
     SendMessage(sendMessage);
+
+    // 이모티콘 초기화
+    handleOffEmoji();
+    // 메세지 초기화
+    event.target.chat_message.value = "";
   }
 
   return (

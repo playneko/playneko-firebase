@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { ThemeProvider } from '@material-ui/styles';
 import { createMuiTheme } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import firebase from "firebase";
 
 // 컴포넌트
 // 로그인
@@ -31,11 +32,25 @@ const colorTheme = createMuiTheme({
   },
 });
 
+const UserData = (auth, setAuthInfo) => {
+  let db = firebase.database();
+  let ref = db.ref("/users/" + auth.uid);
+
+  ref
+  .on("value", snapshot => {
+    setAuthInfo({
+      ...auth,
+      image: snapshot.val().image
+    });
+  });
+}
+
 function App() {
   const [authInfo, setAuthInfo] = React.useState({
     auth: false,
     uid: "",
     email: "",
+    image: "",
     header: ""
   });
   const [myTheme, setMyTheme] = React.useState(colorTheme);
@@ -43,6 +58,9 @@ function App() {
   // 로그인 유무를 체크후 헤더에 넘겨주기
   const handleAuth = (e) => {
     setAuthInfo(e);
+    if (e.auth) {
+      UserData(e, setAuthInfo);
+    }
   };
 
   return (

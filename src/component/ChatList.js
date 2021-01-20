@@ -87,7 +87,7 @@ const RoomRender = (paramData) => {
       <div>
         <ListItemText id={idx} primary={item.name} />
         <div className="chat-list_data">
-          <nobr>{roomdata != null ? roomdata.message : ""}</nobr>
+          <nobr>{roomdata != null ? roomdata.message != null ? roomdata.message : roomdata.emoji != null ? "(이모티콘)" : "" : ""}</nobr>
         </div>
       </div>
       <ListItemSecondaryAction>

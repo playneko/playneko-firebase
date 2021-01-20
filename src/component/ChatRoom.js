@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useParams } from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
@@ -21,19 +21,31 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const ScrollMoveBottom = (chatrooms, messagesRef) => {
+  useEffect(() => {
+    messagesRef.current.scrollIntoView({ behavior: 'auto', block: 'end', inline: 'nearest' });
+  }, [chatrooms]);
+}
+
 const ChatRooms = (message, chatid, setChatRooms) => {
   let db = firebase.database();
   let ref = db.ref("/message/" + chatid);
 
   useEffect(() => {
     ref
-      .limitToLast(15)
+      .limitToLast(20)
       .on("value", snapshot => {
         setChatRooms({
           data: snapshot.val()
         });
       });
   }, [message]);
+}
+
+const EmojiRender = (item) => {
+  return (
+    <img src={"http://10.0.1.5:3000/emoji/" + item.emoji + ".png"} />
+  );
 }
 
 const ListRender = (paramData) => {
@@ -45,7 +57,7 @@ const ListRender = (paramData) => {
       <>
       {
         Object.keys(lists).map((item, idx) => (
-          lists[item].uuid === auth.uid ?
+          lists[item].uuid !== auth.uid ?
             <ListItem key={idx} button>
               <ListItemAvatar className="chat-room_bubble_avatar">
                 <Avatar
@@ -53,13 +65,13 @@ const ListRender = (paramData) => {
                   src={lists[item].image}
                 />
               </ListItemAvatar>
-              <div className="chat-room_bubble_left">{lists[item].message}</div>
+              <div className={lists[item].emoji != null ? "chat-room_emoji_left" : "chat-room_bubble_left"}>{lists[item].emoji != null ? <EmojiRender emoji={lists[item].emoji} /> : lists[item].message}</div>
               <div className="chat-room_bubble_time_left">{lists[item].datetime != null ? lists[item].datetime.split(" ")[1].substring(0,5) : ""}</div>
             </ListItem>
           :
             <ListItem key={idx} button>
               <div className="chat-room_bubble_time_right">{lists[item].datetime != null ? lists[item].datetime.split(" ")[1].substring(0,5) : ""}</div>
-              <div className="chat-room_bubble_right">{lists[item].message}</div>
+              <div className={lists[item].emoji != null ? "chat-room_emoji_right" : "chat-room_bubble_right"}>{lists[item].emoji != null ? <EmojiRender emoji={lists[item].emoji} /> : lists[item].message}</div>
             </ListItem>
         ))
       }
@@ -74,6 +86,7 @@ const ListRender = (paramData) => {
 
 const ChatRoom = (props) => {
   const classes = useStyles();
+  const messagesRef = useRef();
   const { chatid } = useParams();
   const [message, setMessage] = React.useState(null);
   const [chatrooms, setChatRooms] = React.useState(null);
@@ -90,15 +103,16 @@ const ChatRoom = (props) => {
   // 채팅목록 취득
   ChatRooms(message, chatid, setChatRooms);
 
-  console.log(message);
+  // 스크롤 하단으로 이동
+  ScrollMoveBottom(chatrooms, messagesRef);
 
   return (
     <>
       <Header>room</Header>
-      <List dense className={classes.root + " list-top list-bottom"}>
+      <List dense className={classes.root + " list-top list-bottom"} ref={messagesRef}>
       {chatid != null && chatrooms != null ? <ListRender>{paramData}</ListRender> : ""}
       </List>
-      <Footer chatid={chatid} params={setMessage} />
+      <Footer paramData={paramData} paramMsg={setMessage} />
     </>
   );
 }
