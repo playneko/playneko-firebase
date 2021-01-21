@@ -23,28 +23,28 @@ const useStyles = makeStyles((theme) => ({
 
 const ScrollMoveBottom = (chatrooms, messagesRef) => {
   useEffect(() => {
-    messagesRef.current.scrollIntoView({ behavior: 'auto', block: 'end', inline: 'nearest' });
+    messagesRef.current.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' });
   }, [chatrooms]);
 }
 
 const ChatRooms = (message, chatid, setChatRooms) => {
   let db = firebase.database();
-  let ref = db.ref("/message/" + chatid);
+  let ref = db.ref("/message").child(chatid);
 
   useEffect(() => {
     ref
-      .limitToLast(20)
-      .on("value", snapshot => {
-        setChatRooms({
-          data: snapshot.val()
-        });
+    .limitToLast(20)
+    .on("value", snapshot => {
+      setChatRooms({
+        data: snapshot.val()
       });
+    });
   }, [message]);
 }
 
 const EmojiRender = (item) => {
   return (
-    <img src={"http://10.0.1.5:3000/emoji/" + item.emoji + ".png"} />
+    <img src={"/emoji/" + item.emoji + ".png"} />
   );
 }
 

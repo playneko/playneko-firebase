@@ -18,6 +18,8 @@ import PeopleAdd from "./component/PeopleAdd";
 import ChatList from "./component/ChatList";
 // 채팅방
 import ChatRoom from "./component/ChatRoom";
+// 기타
+import Other from "./component/Other";
 // CSS
 import './styles/App.css';
 
@@ -40,6 +42,7 @@ const UserData = (auth, setAuthInfo) => {
   .on("value", snapshot => {
     setAuthInfo({
       ...auth,
+      name: snapshot.val().name,
       image: snapshot.val().image
     });
   });
@@ -77,6 +80,7 @@ function App() {
           <Route path="/people/add" render={() => <PeopleAdd>{authInfo}</PeopleAdd>} />
           <Route path="/chat/list" render={() => <ChatList>{authInfo}</ChatList>} />
           <Route path="/chat/room/:chatid" render={() => <ChatRoom>{authInfo}</ChatRoom>} />
+          <Route path="/other" render={() => <Other />} />
         </Switch>
       </ThemeProvider>
     </Router>

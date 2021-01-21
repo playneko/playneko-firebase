@@ -33,7 +33,7 @@ const ListRender = (paramData) => {
 
   const handleOnPeopleAdd = (auth, uuid, data) => {
     let db = firebase.database();
-    let ref = db.ref("/friends/" + auth.uid + "/" + uuid);
+    let ref = db.ref("/friends").child(auth.uid).child(uuid);
 
     ref.set({
       uuid: uuid,
@@ -113,7 +113,7 @@ const PeopleAdd = (props) => {
           className={classes.margin}
           name="name"
           id="input-with-icon-textfield"
-          label="아이디를 입력해 주세요."
+          label="ユーザ名を入力して下さい。"
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">

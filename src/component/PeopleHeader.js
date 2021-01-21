@@ -30,11 +30,11 @@ const Header = (props) => {
     return (
       <>
         <Typography variant="h6" className={classes.title}>
-          친구목록
+          ともだち
         </Typography>
         <div className="header-people_add">
           <IconButton
-            aria-label="친구추가"
+            aria-label="友達追加"
             aria-controls="menu-appbar"
             aria-haspopup="true"
             color="inherit"
@@ -57,7 +57,7 @@ const Header = (props) => {
           </IconButton>
         </div>
         <Typography variant="h6" className={classes.title}>
-          친구추가
+          ともだち追加
         </Typography>
       </>
     );

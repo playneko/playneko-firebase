@@ -73,28 +73,28 @@ const Login = (props) => {
     <>
       <div className="login-form">
         <form onSubmit={handleOnSubmit} className="login-form_group">
-          {error ? <Alert severity="error">이메일 또는 비밀번호를 확인해 주시기바랍니다.</Alert> : ""}
+          {error ? <Alert severity="error">メールまたは、パスワードを確認して下さい。</Alert> : ""}
           <TextField
-            label="이메일"
+            label="メール"
             id="margin-normal"
             name="email"
             className={classes.textField}
-            helperText="이메일을 입력해 주세요."
+            helperText="メールを入力して下さい。"
           />
           <TextField
-            label="비밀번호"
+            label="パスワード"
             id="margin-normal"
             type="password"
             name="password"
             className={classes.textField}
-            helperText="비밀번호를 입력해 주세요."
+            helperText="パスワードを入力して下さい。"
           />
           <div className={loading === null || loading === false ? "login-form_show" : "login-form_hidden"}>
             <Button variant="contained" color="primary" type="submit">
-              로그인
+              ログイン
             </Button>{' '}
             <Button variant="contained" color="warning" type="button" onClick={handleOnRegistry}>
-              회원가입
+              会員登録
             </Button>
           </div>
           <div className={loading != null && loading === true ? "login-form_show" : "login-form_hidden"}>

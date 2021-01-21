@@ -29,12 +29,12 @@ const ChatRooms = (uid, setChatRooms) => {
 
   useEffect(() => {
     ref
-      .orderByKey()
-      .on("value", snapshot => {
-        setChatRooms({
-          data: snapshot.val()
-        });
+    .orderByKey()
+    .on("value", snapshot => {
+      setChatRooms({
+        data: snapshot.val()
       });
+    });
   }, [uid]);
 }
 
@@ -87,7 +87,7 @@ const RoomRender = (paramData) => {
       <div>
         <ListItemText id={idx} primary={item.name} />
         <div className="chat-list_data">
-          <nobr>{roomdata != null ? roomdata.message != null ? roomdata.message : roomdata.emoji != null ? "(이모티콘)" : "" : ""}</nobr>
+          <nobr>{roomdata != null ? roomdata.message != null ? roomdata.message : roomdata.emoji != null ? "(スタンプ)" : "" : ""}</nobr>
         </div>
       </div>
       <ListItemSecondaryAction>

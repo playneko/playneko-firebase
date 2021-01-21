@@ -71,39 +71,39 @@ const Registry = (props) => {
     <>
       <div className="registry-form">
         <form onSubmit={handleOnSubmit} className="registry-form_group">
-          {error ? <Alert severity="error">회원정보 등록중 에러가 발생했습니다.</Alert> : ""}
+          {error ? <Alert severity="error">会員情報登録中エラーが発生しました。</Alert> : ""}
           <TextField
-            label="이메일"
+            label="メール"
             id="margin-normal"
             name="email"
             className={classes.textField}
-            helperText="이메일을 입력해 주세요."
+            helperText="メールを入力して下さい。"
           />
           <TextField
-            label="비밀번호"
+            label="パスワード"
             id="margin-normal"
             type="password"
             name="password"
             className={classes.textField}
-            helperText="비밀번호를 입력해 주세요."
+            helperText="パスワードを入力して下さい。"
           />
           <TextField
-            label="이름"
+            label="お名前"
             id="margin-normal"
             name="name"
             className={classes.textField}
-            helperText="이름을 입력해 주세요."
+            helperText="お名前を入力して下さい。"
           />
           <TextField
-            label="나이"
+            label="年齢"
             id="margin-normal"
             name="age"
             className={classes.textField}
-            helperText="나이를 입력해 주세요."
+            helperText="年齢を入力して下さい。"
           />
           <div className={loading === null || loading === false ? "registry-form_show" : "registry-form_hidden"}>
             <Button variant="contained" color="primary" type="submit">
-              등록하기
+              登録する
             </Button>
           </div>
           <div className={loading != null && loading === true ? "registry-form_show" : "registry-form_hidden"}>

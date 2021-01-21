@@ -29,7 +29,7 @@ const Header = (props) => {
     return (
       <>
         <Typography variant="h6" className={classes.title}>
-          채팅
+          トーク
         </Typography>
       </>
     );
@@ -45,7 +45,7 @@ const Header = (props) => {
           </IconButton>
         </div>
         <Typography variant="h6" className={classes.title}>
-          채팅방
+          トーク
         </Typography>
       </>
     );
@@ -53,7 +53,7 @@ const Header = (props) => {
 
   // 이전 페이지로 이동
   const handleOnBack = () => {
-    history.goBack();
+    history.push("/chat/list");
   };
 
   return (

@@ -9,6 +9,10 @@ import DirectionsIcon from '@material-ui/icons/Directions';
 import EmojiEmotionsRounded from '@material-ui/icons/EmojiEmotionsRounded';
 import firebase from "firebase";
 
+// 컴포넌트
+// 유니크키 생성
+import ChildByAutoId from "./ChildByAutoId";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     padding: '2px 4px',
@@ -39,15 +43,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ChildByAutoId = (chatid) => {
-  let db = firebase.database();
-  const childByAutoId = db.ref('/message' + chatid).push();
-  return childByAutoId.key;
-}
-
 const SendProcessMessage = (childByAutoId, chatid, paramData) => {
   let db = firebase.database();
-  let ref = db.ref("/message/" + chatid + "/" + childByAutoId);
+  let ref = db.ref("/message").child(chatid).child(childByAutoId);
   ref.set(paramData);
 }
 
@@ -65,7 +63,7 @@ const SendMessage = (sendMessage) => {
       emoji: emoji,
       datetime : nowTime
     };
-    const childByAutoId = ChildByAutoId(chatid);
+    const childByAutoId = ChildByAutoId("message", chatid);
     SendProcessMessage(childByAutoId, chatid, paramData);
   }
   if (chatid != null && message != null && message.length > 0) {
@@ -75,7 +73,7 @@ const SendMessage = (sendMessage) => {
       message: message,
       datetime : nowTime
     };
-    const childByAutoId = ChildByAutoId(chatid);
+    const childByAutoId = ChildByAutoId("message", chatid);
     SendProcessMessage(childByAutoId, chatid, paramData);
   }
 }
@@ -125,7 +123,7 @@ const Footer = (props) => {
     <>
       <div className={open ? "footer-chat_room footer-chat_input_open" : "footer-chat_room"}>
           <div className={selEmoji != null ? "footer_chat_room_emoji_pv_open" : "footer_chat_room_emoji_pv_close"}>
-            <img src={"http://10.0.1.5:3000/emoji/" + (selEmoji ? selEmoji : "001") + ".png"} />
+            <img src={"/emoji/" + (selEmoji ? selEmoji : "001") + ".png"} />
           </div>
           <Paper component="form" className={classes.root + " footer-chat_fieldset"} onSubmit={handleOnSubmit}>
             <TextField
@@ -149,7 +147,7 @@ const Footer = (props) => {
           <div className={open ? "footer-chat_room_emoji footer-chat_emoji_open" : "footer-chat_room_emoji footer-chat_emoji_close"}>
           {
             emojiArr.map(item => (
-              <div><img src={"http://10.0.1.5:3000/emoji/" + item + ".png"} onClick={() => handleOnSelEmoji(item)} /></div>
+              <div><img src={"/emoji/" + item + ".png"} onClick={() => handleOnSelEmoji(item)} /></div>
             ))
           }
           </div>
