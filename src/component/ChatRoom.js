@@ -65,7 +65,10 @@ const ListRender = (paramData) => {
                   src={lists[item].image}
                 />
               </ListItemAvatar>
-              <div className={lists[item].emoji != null ? "chat-room_emoji_left" : "chat-room_bubble_left"}>{lists[item].emoji != null ? <EmojiRender emoji={lists[item].emoji} /> : lists[item].message}</div>
+              <div>
+                <div className="chat-room_bubble_name_left">{lists[item].name}</div>
+                <div className={lists[item].emoji != null ? "chat-room_emoji_left" : "chat-room_bubble_left"}>{lists[item].emoji != null ? <EmojiRender emoji={lists[item].emoji} /> : lists[item].message}</div>
+              </div>
               <div className="chat-room_bubble_time_left">{lists[item].datetime != null ? lists[item].datetime.split(" ")[1].substring(0,5) : ""}</div>
             </ListItem>
           :

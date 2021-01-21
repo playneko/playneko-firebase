@@ -59,6 +59,7 @@ const SendMessage = (sendMessage) => {
   if (chatid != null && emoji != null && emoji.length > 0) {
     const paramData = {
       uuid: auth.uid,
+      name: auth.name,
       image: auth.image,
       emoji: emoji,
       datetime : nowTime
@@ -69,6 +70,7 @@ const SendMessage = (sendMessage) => {
   if (chatid != null && message != null && message.length > 0) {
     const paramData = {
       uuid: auth.uid,
+      name: auth.name,
       image: auth.image,
       message: message,
       datetime : nowTime

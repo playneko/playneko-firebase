@@ -80,7 +80,7 @@ function App() {
           <Route path="/people/add" render={() => <PeopleAdd>{authInfo}</PeopleAdd>} />
           <Route path="/chat/list" render={() => <ChatList>{authInfo}</ChatList>} />
           <Route path="/chat/room/:chatid" render={() => <ChatRoom>{authInfo}</ChatRoom>} />
-          <Route path="/other" render={() => <Other />} />
+          <Route path="/other" render={() => <Other>{authInfo}</Other>} />
         </Switch>
       </ThemeProvider>
     </Router>

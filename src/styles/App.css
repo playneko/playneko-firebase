@@ -237,6 +237,11 @@ button:focus {
     width: 100px;
 }
 
+.chat-room_bubble_name_left {
+    padding: 2px;
+    font-size: 9px;
+}
+
 .chat-room_bubble_time_left {
     font-size: 9px;
     margin-top: auto;
