@@ -2,13 +2,14 @@ button:focus {
     outline: none;
 }
 
-.header {
+.header > header {
     width: 100%;
     z-index: 9999;
     max-width: 100%;
     position: fixed;
-    color: #ffffff !important;
-    background: #1f1f1f !important;
+    box-shadow: unset;
+    color: #f1f1f1 !important;
+    background: #484848 !important;
 }
 
 .header-people_add {
@@ -27,8 +28,8 @@ button:focus {
     z-index: 9999;
     max-width: 100%;
     position: fixed;
-    color: #ffffff !important;
-    background: #1f1f1f !important;
+    color: #f1f1f1 !important;
+    background: #484848 !important;
 }
 
 .footer-chat_room {
@@ -255,4 +256,24 @@ button:focus {
     margin-left: auto;
     margin-bottom: 0;
     padding-right: 5px;
+}
+
+.other-avatar {
+    float: left;
+    padding: 15px;
+    min-width: 75px;
+}
+
+.other-avatar > div {
+    width: 75px;
+    height: 75px;
+}
+
+.other-name {
+    font-size: 20px;
+    padding-top: 15px;
+}
+
+.other-name > p {
+    white-space: nowrap;
 }
