@@ -22,12 +22,11 @@ const useStyles = makeStyles((theme) => ({
 
 const Other = (props) => {
   const classes = useStyles();
-  const auth = props.children;
+  const auth = props.auth;
+  const setAuthInfo = props.setAuthInfo;
 
   // 로그인 체크
-  CheckLogin(props);
-
-  console.log(auth);
+  CheckLogin(auth);
 
   return (
     <>
@@ -42,7 +41,7 @@ const Other = (props) => {
           <div className="other-profile">
             프로필사진 변경
           </div>
-          <FileUploader />
+          <FileUploader auth={auth} setAuthInfo={setAuthInfo} />
         <ListItem key="0" className="other-profile_list">
           <ListItemText id="0" primary="이름" />
           <ListItemText id="0" primary={auth.name} />

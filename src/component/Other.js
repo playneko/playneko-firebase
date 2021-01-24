@@ -42,7 +42,9 @@ const Other = (props) => {
   ];
 
   const handleOnMenu = (link) => {
-    history.push("/other/" + link);
+    if (link && link != null) {
+      history.push("/other/" + link);
+    }
   };
 
   // 로그인 체크

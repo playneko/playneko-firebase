@@ -38,10 +38,7 @@ const colorTheme = createMuiTheme({
     },
     secondary: {
       main: '#ff3d00',
-    },
-    info: {
-      main: '#8bc34a',
-    },
+    }
   },
 });
 
@@ -92,7 +89,7 @@ function App() {
           <Route path="/chat/list" render={() => <ChatList>{authInfo}</ChatList>} />
           <Route path="/chat/room/:chatid" render={() => <ChatRoom>{authInfo}</ChatRoom>} />
           <Route path="/other/main" render={() => <Other>{authInfo}</Other>} />
-          <Route path="/other/profile" render={() => <Profile>{authInfo}</Profile>} />
+          <Route path="/other/profile" render={() => <Profile auth={authInfo} setAuthInfo={setAuthInfo} />} />
           <Route path="/other/notice" render={() => <Notice>{authInfo}</Notice>} />
           <Route path="/other/version" render={() => <Version>{authInfo}</Version>} />
           <Route path="/other/help" render={() => <Help>{authInfo}</Help>} />

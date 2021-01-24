@@ -1,10 +1,82 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import MuiAlert from '@material-ui/lab/Alert';
 import Typography from '@material-ui/core/Typography';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import firebase from "firebase";
+
+const UpdateData = (ref, key1, key2, data, image) => {
+    // 이미지 데이터 정보 갱신
+    const newImageInfo = {...data, image: image};
+    ref.child(key1).child(key2).update(newImageInfo);
+}
+
+const FindDataUpdateUsers = (uid, image) => {
+    let db = firebase.database();
+    let ref = db.ref("/users");
+
+    ref.orderByChild("uuid").equalTo(uid).once("value", snapshot => {
+        // 이미지 데이터 정보 갱신
+        const newImageInfo = {...snapshot.val(), image: image};
+        ref.child(uid).update(newImageInfo);
+    });
+}
+
+const FindDataUpdateChatRooms = (uid, image, setChatRooms) => {
+    let db = firebase.database();
+    let ref = db.ref("/chatrooms");
+
+    ref.once("value", snapshot => {
+        const listVal = snapshot.val();
+        setChatRooms({data: listVal});
+        Object.keys(listVal).map((item, idx) => (
+            Object.keys(listVal[item]).map((item2, idx2) => (
+                // 이미지 데이터 정보 갱신
+                item2 === uid ? UpdateData(ref, item, item2, listVal[item][item2], image) : ""
+            ))
+        ));
+    });
+}
+
+const FindDataUpdateFriends = (uid, image) => {
+    let db = firebase.database();
+    let ref = db.ref("/friends");
+
+    ref.once("value", snapshot => {
+        const listVal = snapshot.val();
+        Object.keys(listVal).map((item, idx) => (
+            Object.keys(listVal[item]).map((item2, idx2) => (
+                // 이미지 데이터 정보 갱신
+                listVal[item][item2].uuid === uid ? UpdateData(ref, item, item2, listVal[item][item2], image) : ""
+            ))
+        ));
+    });
+}
+
+const FindDataUpdateMessage = (uid, image, chatrooms) => {
+    let db = firebase.database();
+    let ref = db.ref("/message");
+    const lists = chatrooms.data;
+
+    Object.keys(lists).map((item, idx) => (
+        Object.keys(lists[item]).map((item2, idx2) => (
+            ref.child(lists[item][item2].chatid).once("value", snapshot => {
+                const chatid = lists[item][item2].chatid;
+                const listVal = snapshot.val();
+                Object.keys(listVal).map((item3, idx3) => (
+                    ref.child(chatid).child(item3).once("value", snapshot2 => {
+                        const listVal2 = snapshot2.val();
+                        if (listVal2.uuid === uid) {
+                            // 이미지 데이터 정보 갱신
+                            UpdateData(ref, chatid, item3, listVal2, image)
+                        }
+                    })
+                ));
+            })
+        ))
+    ));
+}
 
 const CircularProgressWithLabel = (props) => {
     return (
@@ -30,10 +102,14 @@ const Alert = (props) => {
     return <MuiAlert elevation={6} variant="filled" {...props} className="other-upload_error" />;
 }
 
-const FileUpload = () => {
+const FileUpload = (props) => {
+    const auth = props.auth;
+    const setAuthInfo = props.setAuthInfo;
     const hiddenFileInput = React.useRef(null);
+    const [chatrooms, setChatRooms] = React.useState({});
     const [error, setError] = React.useState(false);
     const [loading, setLoading] = React.useState(false);
+    const [uploadFlg, setUploadFlg] = React.useState(false);
     const [progress, setProgress] = React.useState(0);
     const [fileUpload, setFileUpload] = React.useState({
         files: []
@@ -65,10 +141,8 @@ const FileUpload = () => {
 
                 switch (snapshot.state) {
                     case firebase.storage.TaskState.PAUSED: // or 'paused'
-                        console.log('Upload is paused');
                         break;
                     case firebase.storage.TaskState.RUNNING: // or 'running'
-                        console.log('Upload is running');
                         break;
                 }
             }, (error) => {
@@ -77,8 +151,7 @@ const FileUpload = () => {
             }, () => {
                 // 로드가 성공적으로 완료되면 이때부터 다운로드 url을 가져올수 있음
                 uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
-                    console.log('File available at', downloadURL);
-
+                    // console.log('File available at', downloadURL);
                     // state에 파일이름과 스토리지 url 저장
                     const obj = {
                         name: file.name,
@@ -87,13 +160,16 @@ const FileUpload = () => {
                     setFileUpload({
                         files: fileUpload.files.concat(obj)
                     });
+                    // 사용자 정보 갱신
+                    const newAuthInfo = {...auth, image: downloadURL};
+                    setAuthInfo(newAuthInfo);
                     setLoading(false);
+                    setUploadFlg(true);
                 });
             });
         }
 
         reader.onerror = (e) => {
-            console.log("Failed file read: " + e.toString());
             setError(true);
             setLoading(false);
         };
@@ -101,7 +177,9 @@ const FileUpload = () => {
     }
 
     const handleClick = (e) => {
-        hiddenFileInput.current.click();
+        if (!error && !loading && progress < 1) {
+            hiddenFileInput.current.click();
+        }
     };
 
     const handleChange = (e) => {
@@ -109,6 +187,24 @@ const FileUpload = () => {
         const fileUploaded = e.target.files[0];
         handleOnFileUpload(fileUploaded);
     };
+
+    useEffect(() => {
+        if (uploadFlg && auth.uid && auth.uid != null) {
+            // 사용자 갱신
+            FindDataUpdateUsers(auth.uid, auth.image);
+            // 채팅방 갱신
+            FindDataUpdateChatRooms(auth.uid, auth.image, setChatRooms);
+            // 친구목록 갱신
+            FindDataUpdateFriends(auth.uid, auth.image);
+        }
+    }, [uploadFlg]);
+
+    // 메세지 갱신
+    useEffect(() => {
+        if (uploadFlg && chatrooms && chatrooms != null) {
+            FindDataUpdateMessage(auth.uid, auth.image, chatrooms);
+        }
+    }, [chatrooms]);
 
     return (
         <div>
@@ -124,14 +220,14 @@ const FileUpload = () => {
                 : ""
             }
             {
-                !error && !loading && progress < 1 ?
+                !error && !loading && !uploadFlg ?
                     <Button variant="contained" color="info" type="button">
                         写真選択
                     </Button>
                 : ""
             }
             {
-                !error && !loading && progress === 100 ?
+                !error && !loading && uploadFlg ?
                     <div className="other-upload_success">
                         アップロードが完了しました。
                     </div>
