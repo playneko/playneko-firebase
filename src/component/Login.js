@@ -8,9 +8,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 
 // 컴포넌트
 // Firebase
-import firebase from './Firebase'
-// CSS
-import '../styles/App.css';
+import firebase from './Firebase';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -48,6 +46,7 @@ const Login = (props) => {
         auth: true,
         uid: res.user.uid,
         image: "",
+        age: "",
         email: res.user.email
       });
       history.push("/");
@@ -57,6 +56,7 @@ const Login = (props) => {
         auth: false,
         uid: "",
         image: "",
+        age: "",
         email: ""
       });
       setError(true);

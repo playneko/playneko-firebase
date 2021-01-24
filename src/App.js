@@ -20,6 +20,14 @@ import ChatList from "./component/ChatList";
 import ChatRoom from "./component/ChatRoom";
 // 기타
 import Other from "./component/Other";
+// 프로필
+import Profile from "./component/Profile";
+// 공지사항
+import Notice from "./component/Notice";
+// 버전
+import Version from "./component/Version";
+// 헬프
+import Help from "./component/Help";
 // CSS
 import './styles/App.css';
 
@@ -30,6 +38,9 @@ const colorTheme = createMuiTheme({
     },
     secondary: {
       main: '#ff3d00',
+    },
+    info: {
+      main: '#8bc34a',
     },
   },
 });
@@ -80,7 +91,11 @@ function App() {
           <Route path="/people/add" render={() => <PeopleAdd>{authInfo}</PeopleAdd>} />
           <Route path="/chat/list" render={() => <ChatList>{authInfo}</ChatList>} />
           <Route path="/chat/room/:chatid" render={() => <ChatRoom>{authInfo}</ChatRoom>} />
-          <Route path="/other" render={() => <Other>{authInfo}</Other>} />
+          <Route path="/other/main" render={() => <Other>{authInfo}</Other>} />
+          <Route path="/other/profile" render={() => <Profile>{authInfo}</Profile>} />
+          <Route path="/other/notice" render={() => <Notice>{authInfo}</Notice>} />
+          <Route path="/other/version" render={() => <Version>{authInfo}</Version>} />
+          <Route path="/other/help" render={() => <Help>{authInfo}</Help>} />
         </Switch>
       </ThemeProvider>
     </Router>

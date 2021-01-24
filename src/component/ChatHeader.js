@@ -24,6 +24,11 @@ const Header = (props) => {
   const classes = useStyles();
   const page = props.children;
 
+  // 이전 페이지로 이동
+  const handleOnBack = () => {
+    history.push("/chat/list");
+  };
+
   // 채팅 헤더
   const ChatList = () => {
     return (
@@ -50,11 +55,6 @@ const Header = (props) => {
       </>
     );
   }
-
-  // 이전 페이지로 이동
-  const handleOnBack = () => {
-    history.push("/chat/list");
-  };
 
   return (
     <div className={classes.root + " header"}>

@@ -9,8 +9,6 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 // 컴포넌트
 // Firebase
 import firebase from './Firebase'
-// CSS
-import '../styles/App.css';
 
 const useStyles = makeStyles((theme) => ({
   root: {

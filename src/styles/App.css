@@ -277,3 +277,33 @@ button:focus {
 .other-name > p {
     white-space: nowrap;
 }
+
+.other-profile {
+    font-size: 12px;
+    padding-top: 10px;
+}
+
+.other-profile_list > div:first-child {
+    min-width: 60px;
+    max-width: 60px;
+}
+
+.other-progress > div {
+    color: #2196F3;
+}
+
+.other-progress > div, .other-progress > button {
+    margin-top: 12px;
+}
+
+.other-upload_success {
+    font-weight: bold;
+    color: #8BC34A !important;
+}
+
+.other-upload_error {
+    margin-top: 12px;
+    font-size: 12px !important;
+    margin: 10px !important;
+    color: #ffffff !important;
+}
