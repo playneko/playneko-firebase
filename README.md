@@ -5,7 +5,7 @@
 >   * React
 >   * Firebase
 >     + Authentication
->     + ealtime Database
+>     + Realtime Database
 >     + Storage
 
 React와 Firebase를 기반으로 제작된 메신저 어플 입니다.
