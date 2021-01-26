@@ -19,3 +19,24 @@ ReactとFirebaseを基盤にし、開発したメッセンジャーアプリで�
 
 実際の動作の確認はでもページを参考して下さい。
 DEMOページはなるべく携帯で確認して下さい。（モバイル環境に最適化中）
+
+### 화면 캡쳐
+### 画面キャプチャー
+
+![image](https://raw.githubusercontent.com/playneko/playneko-firebase/main/public/capture/001.PNG)
+
+![image](https://raw.githubusercontent.com/playneko/playneko-firebase/main/public/capture/002.PNG)
+
+![image](https://raw.githubusercontent.com/playneko/playneko-firebase/main/public/capture/003.PNG)
+
+![image](https://raw.githubusercontent.com/playneko/playneko-firebase/main/public/capture/004.PNG)
+
+![image](https://raw.githubusercontent.com/playneko/playneko-firebase/main/public/capture/005.PNG)
+
+![image](https://raw.githubusercontent.com/playneko/playneko-firebase/main/public/capture/006.PNG)
+
+![image](https://raw.githubusercontent.com/playneko/playneko-firebase/main/public/capture/007.PNG)
+
+![image](https://raw.githubusercontent.com/playneko/playneko-firebase/main/public/capture/008.PNG)
+
+![image](https://raw.githubusercontent.com/playneko/playneko-firebase/main/public/capture/009.PNG)
