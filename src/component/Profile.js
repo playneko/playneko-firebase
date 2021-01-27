@@ -39,15 +39,15 @@ const Other = (props) => {
           />
         </ListItemAvatar>
           <div className="other-profile">
-            프로필사진 변경
+            プロフィール写真変更
           </div>
           <FileUploader auth={auth} setAuthInfo={setAuthInfo} />
         <ListItem key="0" className="other-profile_list">
-          <ListItemText id="0" primary="이름" />
+          <ListItemText id="0" primary="お名前" />
           <ListItemText id="0" primary={auth.name} />
         </ListItem>
         <ListItem key="2" className="other-profile_list">
-          <ListItemText id="2" primary="이메일" />
+          <ListItemText id="2" primary="メール" />
           <ListItemText id="2" primary={auth.email} />
         </ListItem>
       </List>

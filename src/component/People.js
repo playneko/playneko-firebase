@@ -65,9 +65,9 @@ const AddChatRoomData = (handleRoom) => {
   };
 
   // 나와 상대편의 채팅방 개설
-  db.ref('chatrooms').child(myRoomData.uuid).child(userRoomData.uuid).update(myRoomData);
+  db.ref('chatrooms').child(myRoomData.uuid).child(userRoomData.uuid).update(userRoomData);
   // 상대편과 나의 채팅방 개설
-  db.ref('chatrooms').child(userRoomData.uuid).child(myRoomData.uuid).update(userRoomData);
+  db.ref('chatrooms').child(userRoomData.uuid).child(myRoomData.uuid).update(myRoomData);
 
   return childByAutoId;
 }

@@ -149,7 +149,7 @@ const Footer = (props) => {
           <div className={open ? "footer-chat_room_emoji footer-chat_emoji_open" : "footer-chat_room_emoji footer-chat_emoji_close"}>
           {
             emojiArr.map(item => (
-              <div><img src={"/emoji/" + item + ".png"} onClick={() => handleOnSelEmoji(item)} /></div>
+              <div><img src={"/emoji/" + item + ".png"} onClick={() => handleOnSelEmoji(item)} onDoubleClick={() => handleOnSelEmoji(item)} /></div>
             ))
           }
           </div>
