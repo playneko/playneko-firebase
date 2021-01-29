@@ -213,13 +213,14 @@ button:focus {
     padding: 5px;
     width: auto;
     font-size: 10px;
-    color: #ffffff;
+    color: #4c4c4c;
     padding-left: 10px;
     padding-right: 10px;
     border-radius: 7px;
     white-space: pre-line;
-    background: #868686;
-    border: 1px solid #868686;
+    background: #e8e8e8;
+    border: 1px solid #e8e8e8;
+    border-top-left-radius: 0px;
 }
 
 .chat-room_bubble_right {
@@ -232,6 +233,7 @@ button:focus {
     white-space: pre-line;
     background: #ffde3f;
     border: 1px solid #ffde3f;
+    border-bottom-right-radius: 0px;
 }
 
 .chat-room_emoji_left, .chat-room_emoji_right {

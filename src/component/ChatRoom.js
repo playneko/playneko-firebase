@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ScrollMoveBottom = (chatrooms, messagesRef) => {
   useEffect(() => {
-    messagesRef.current.scrollIntoView({ behavior: 'auto', block: 'end', inline: 'nearest' });
+    messagesRef.current.scrollIntoView({ behavior: 'auto', block: 'end' });
   }, [chatrooms]);
 }
 
